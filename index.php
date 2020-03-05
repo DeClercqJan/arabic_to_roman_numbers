@@ -1,47 +1,175 @@
 <?php
 
-// echo 1500 % 1000;
+// declare(strict_types=1);
 
-if (isset($_POST["arabic_numbers"])) {
-    $total = $_POST["arabic_numbers"];
+// if (isset($_POST["arabic_numbers"])) {
+//     $total = $_POST["arabic_numbers"];
 
-    if ($total % 1000 >= 1) {
-        // $test = floor($total - $total % 1000);
-        $amount = $total / 1000;
-        $amount2 = floor($amount);
-        // echo $test2;
-        for ($i = 1; $i <= $amount2; $i++) {
-            echo "M";
+//     if ($total % 1000 >= 1) {
+//         // $test = floor($total - $total % 1000);
+//         $amount = $total / 1000;
+//         $amount2 = floor($amount);
+//         // echo $test2;
+//         for ($i = 1; $i <= $amount2; $i++) {
+//             echo "M";
+//         }
+//         $total %= 1000;
+//     }
+//     // echo "na %1000 is het $total <br>";
+//     // if ($total % 900 == 0) {
+//     if ($total % 900 >= 0) {
+//         // echo "$total IN if 900 is <br>";
+//         $amount = $total / 900;
+//         $amount2 = floor($amount);
+//         // echo $test2;
+//         for ($i = 1; $i <= $amount2; $i++) {
+//             echo "CM";
+//         }
+//         $total %= 900;
+//     }
+//     echo "na %900 is het $total <br>";
+//     if ($total % 500 >= 1) {
+//         // echo "$total IN if 900 is <br>";
+//         $amount = $total / 500;
+//         $amount2 = floor($amount);
+//         // echo $test2;
+//         for ($i = 1; $i <= $amount2; $i++) {
+//             echo "D";
+//         }
+//         // echo "D <br>";
+//         $total %= 500;
+//     }
+
+//     echo $total;
+// }
+
+// gonna try to write this in a more reuasable manner
+class Transformer
+{
+    private $input = 0;
+    private $rest = 0;
+    private $output = "";
+
+    function __construct()
+    {
+        if (isset($_POST["arabic_numbers"])) {
+            $this->input = (int) $_POST["arabic_numbers"];
         }
-        $total %= 1000;
-    }
-    // echo "na %1000 is het $total <br>";
-    // if ($total % 900 == 0) {
-    if ($total % 900 >= 0) {
-        // echo "$total IN if 900 is <br>";
-        $amount = $total / 900;
-        $amount2 = floor($amount);
-        // echo $test2;
-        for ($i = 1; $i <= $amount2; $i++) {
-            echo "CM";
-        }
-        $total %= 900;
-    }
-    echo "na %900 is het $total <br>";
-    if ($total % 500 >= 1) {
-        // echo "$total IN if 900 is <br>";
-        $amount = $total / 500;
-        $amount2 = floor($amount);
-        // echo $test2;
-        for ($i = 1; $i <= $amount2; $i++) {
-            echo "D";
-        }
-        // echo "D <br>";
-        $total %= 500;
     }
 
-    echo $total;
+    public function get_input()
+    {
+        return $this->input;
+    }
+
+    public function get_rest_so_far()
+    {
+        return $this->rest;
+    }
+
+    public function get_output()
+    {
+        return $this->output;
+    }
+
+    public function check_input(int $rest1, int $check_number, string $symbol_if_true, bool $_check_greater_than_or_equal)
+    {
+        if ($_check_greater_than_or_equal) {
+            if ($rest1 % $check_number >= 1) {
+                $amount = $rest1 / $check_number;
+                $amount2 = floor($amount);
+                for ($i = 1; $i <= $amount2; $i++) {
+                    $this->output = "$this->output" . "$symbol_if_true";
+                }
+                $rest2 = $rest1 % $check_number;
+                $this->rest = $rest2;
+            }
+        } elseif (!$_check_greater_than_or_equal) {
+            // note: had to be zero
+            if ($rest1 % $check_number == 0) {
+                $amount = $rest1 / $check_number;
+                $amount2 = floor($amount);
+                for ($i = 1; $i <= $amount2; $i++) {
+                    $this->output = "$this->output" . "$symbol_if_true";
+                }
+                $rest2 = $rest1 % $check_number;
+                $this->rest = $rest2;
+            }
+        }
+    }
 }
+
+$transformer = new Transformer();
+$input = $transformer->get_input();
+echo $transformer->check_input(
+    $input,
+    1000,
+    "M",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    900,
+    "CM",
+    false
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    500,
+    "D",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    100,
+    "C",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    90,
+    "XC",
+    false
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    50,
+    "L",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    10,
+    "X",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    9,
+    "IX",
+    false
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    5,
+    "V",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    4,
+    "IV",
+    false
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    1,
+    "I",
+    true
+);
+echo $transformer->get_output();
+
+
 
 // echo $_POST["arabic_numbers"];
 
@@ -51,8 +179,6 @@ if (isset($_POST["arabic_numbers"])) {
 
 // // var_dump($character_splitted_array);
 // // var_dump($length_character_splitted_array);
-
-
 
 // // for ($i = 0; $i <= $length_character_splitted_array; $i++) {
 // for ($i = $length_character_splitted_array; $i >= $length_character_splitted_array; $i--) {
@@ -148,8 +274,6 @@ if (isset($_POST["arabic_numbers"])) {
 //         echo "I";
 //         continue;
 // }
-
-
 
 ?>
 
