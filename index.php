@@ -99,6 +99,7 @@ class Transformer
     }
 }
 
+// drive-by edit: got a tip: also 4's 40's and such need to be done still
 $transformer = new Transformer();
 $input = $transformer->get_input();
 echo $transformer->check_input(
