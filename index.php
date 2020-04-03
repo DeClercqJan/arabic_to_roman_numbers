@@ -74,8 +74,8 @@ class Transformer
 
     public function check_input(int $rest1, int $check_number, string $symbol_if_true, bool $_check_greater_than_or_equal)
     {
-        if ($_check_greater_than_or_equal) {
-            if ($rest1 % $check_number >= 1) {
+        // if ($_check_greater_than_or_equal) {
+        //     if ($rest1 % $check_number >= 1) {
                 $amount = $rest1 / $check_number;
                 $amount2 = floor($amount);
                 for ($i = 1; $i <= $amount2; $i++) {
@@ -83,31 +83,130 @@ class Transformer
                 }
                 $rest2 = $rest1 % $check_number;
                 $this->rest = $rest2;
-            }
-        } elseif (!$_check_greater_than_or_equal) {
-            // note: had to be zero
-            if ($rest1 % $check_number == 0) {
-                $amount = $rest1 / $check_number;
-                $amount2 = floor($amount);
-                for ($i = 1; $i <= $amount2; $i++) {
-                    $this->output = "$this->output" . "$symbol_if_true";
-                }
-                $rest2 = $rest1 % $check_number;
-                $this->rest = $rest2;
-            }
-        }
+            // }
+        // } elseif (!$_check_greater_than_or_equal) {
+        //     // note: had to be zero
+        //     if ($rest1 % $check_number == 0) {
+        //         $amount = $rest1 / $check_number;
+        //         $amount2 = floor($amount);
+        //         for ($i = 1; $i <= $amount2; $i++) {
+        //             $this->output = "$this->output" . "$symbol_if_true";
+        //         }
+        //         $rest2 = $rest1 % $check_number;
+        //         $this->rest = $rest2;
+        //     }
+        // }
     }
 }
 
 // drive-by edit: got a tip: also 4's 40's and such need to be done still
 $transformer = new Transformer();
 $input = $transformer->get_input();
+
+// $matchingSymbolsArray = [900 => "CM", 500 => "D"];
+
+// echo $transformer->check_input(
+//     $input,
+//     1000,
+//     "M",
+//     true
+// );
+
+// foreach ($matchingSymbolsArray as $key => $value) 
+// {
+//     echo "$key is $value <br>";
+//     echo $transformer->get_rest_so_far(),
+//             ,
+//         $key,
+//         $value,
+//         true
+//     );
+// }
+echo "<p>";
 echo $transformer->check_input(
     $input,
+    1000000,
+    "<span style=\"text-decoration:overline;\">M</span>",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    900000,
+    "<span style=\"text-decoration:overline;\">CM</span>",
+    false
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    500000,
+    "<span style=\"text-decoration:overline;\">D</span>",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    400000,
+    "<span style=\"text-decoration:overline;\">CD</span>",
+    false
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    100000,
+    "<span style=\"text-decoration:overline;\">C</span>",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    90000,
+    "<span style=\"text-decoration:overline;\">XC</span>",
+    false
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    50000,
+    "<span style=\"text-decoration:overline;\">L</span>",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    40000,
+    "<span style=\"text-decoration:overline;\">XL</span>",
+    false
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    10000,
+    "<span style=\"text-decoration:overline;\">X</span>",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    9000,
+    "M<span style=\"text-decoration:overline;\">X</span>",
+    false
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    5000,
+    "<span style=\"text-decoration:overline;\">V</span>",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    4000,
+    "M<span style=\"text-decoration:overline;\">V</span>",
+    true
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
     1000,
     "M",
     true
 );
+// echo $transformer->check_input(
+//     $transformer->get_rest_so_far(),
+//     999,
+//     "MCMXCIX",
+//     false
+// );
 echo $transformer->check_input(
     $transformer->get_rest_so_far(),
     900,
@@ -122,15 +221,27 @@ echo $transformer->check_input(
 );
 echo $transformer->check_input(
     $transformer->get_rest_so_far(),
+    400,
+    "CD",
+    false
+);
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
     100,
     "C",
     true
 );
+// echo $transformer->check_input(
+//     $transformer->get_rest_so_far(),
+//     99,
+//     "XCIX",
+//     true
+// );
 echo $transformer->check_input(
     $transformer->get_rest_so_far(),
     90,
     "XC",
-    false
+    true
 );
 echo $transformer->check_input(
     $transformer->get_rest_so_far(),
@@ -138,6 +249,18 @@ echo $transformer->check_input(
     "L",
     true
 );
+echo $transformer->check_input(
+    $transformer->get_rest_so_far(),
+    40,
+    "XL",
+    false
+);
+// echo $transformer->check_input(
+//     $transformer->get_rest_so_far(),
+//     44,
+//     "XLIV",
+//     false
+// );
 echo $transformer->check_input(
     $transformer->get_rest_so_far(),
     10,
@@ -169,7 +292,7 @@ echo $transformer->check_input(
     true
 );
 echo $transformer->get_output();
-
+echo "</p>";
 
 
 // echo $_POST["arabic_numbers"];
@@ -277,8 +400,10 @@ echo $transformer->get_output();
 // }
 
 ?>
-
+<p>Largest supprt symbol is <span style="text-decoration: overline;">M</span> 
+for one million. Any number above that is not supported and therefore may not be correct, 
+probably starting around 1,499,999 (depending on how zhe Romans actually did it)</p>
 <form action="index.php" method="POST">
-    <input type="numbers" name="arabic_numbers">
+    <input type="numbers" name="arabic_numbers" maxlength="10">
     <input type="submit">
 </form>
