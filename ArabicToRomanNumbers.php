@@ -40,11 +40,6 @@ class ArabicToRomanNumbers
 $this->rest = $rest;
     }
 
-    public function get_rest_so_far() : int
-    {
-        return $this->rest;
-    }
-
     public function get_output() : string
     {
         foreach ($this->matchingSymbolsArray as $key => $value) 

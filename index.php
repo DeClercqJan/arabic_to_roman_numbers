@@ -22,15 +22,23 @@ $output =  $ArabicToRomanNumbers->get_output();
     <title>Document</title>
 </head>
 <body>
+<h1>Arabic To Roman Numbers</h1>
+<p>Also includes Roman symbols over 4000, which is <span style="text-decoration:overline;">V</span>, up to one million</p>
 <main>
 <article>
-<h1>Arabic To Roman Numbers</h1>
 <section>
 <h2>How it works</h2>
 <p>Enter a number, send form and get the number in Roman numerals</p>
-<p>Largest supprt symbol is <span style="text-decoration: overline;">M</span> 
-for one million. Any number above that is not supported and therefore may not be correct, 
-probably starting around 1,499,999 (depending on how zhe Romans actually did it)</p>
+<p>Caveats:
+<ul>
+<li>Decimals are not supported, wheter points or commas are used</li>
+<li>Spaces are not supported</li>
+<li>Largest supprted symbol is <span style="text-decoration: overline;">M</span> 
+for one million.</li>
+<li>Any number above one million is not supported and therefore may not be correct </br>
+, errors probably starting around 1499999 (depending on how zhe Romans actually did it - I don't know)</li>
+</ul>
+</p>
 </section>
 <section>
 <form action="index.php" method="POST">
@@ -54,6 +62,9 @@ echo $output;
 ?>
 </article>
 </main>
+<footer>
+<p> 	&copy; 2020 <a href="mailto:declercqjan@gmail.com">Jan De Clercq</a></p>
+</footer>
 </body>
 </html>
 
